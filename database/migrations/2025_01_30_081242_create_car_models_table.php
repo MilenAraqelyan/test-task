@@ -9,18 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('phones', function (Blueprint $table) {
+        Schema::create('car_models', function (Blueprint $table) {
             $table->id();
-            $table->string('number');
-            $table->unsignedBigInteger('organization_id');
+            $table->string('name');
+            $table->foreignId('comfort_category_id')->constrained('comfort_categories')->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('organization_id')
-                ->references('id')
-                ->on('organizations')
-                ->onDelete('cascade');
         });
     }
 
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('phones');
+        Schema::dropIfExists('car_models');
     }
 };
